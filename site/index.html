@@ -121,7 +121,7 @@ footer{border-top:1px solid var(--rule);padding-top:1.25rem;display:flex;flex-di
   <p class="lede">AI adoption in personal finance will start small: plugging into the tools people already use, reading their current state, and letting them talk to it.  The long-term goal, I believe, is an operating system for your life, built and run by AI.</p>
   <p>In finance the question is almost always a version of the same thing: here's what I have, here are my goals, how am I doing?  The resources are similar from person to person and so are the goals; the details are not.  The inputs look alike, the path is personal.  That is exactly what AI is good at: take all of a person's data in and build an answer for that one person.</p>
   <p>I see this every day in the personal-finance Facebook groups I'm in.  People post their numbers and ask for a recommendation for their exact situation.  The end state is a financial OS that holds all of my variables in one system of record, acts where it's allowed to, and tells me what I'm missing when I need it.  That includes answering the questions I didn't know I needed to ask.</p>
-  <p class="byline">Inna Raykhman · October 2026 · built with Claude · tested on Gemini 3.1 Pro (preview) with Google Search</p>
+  <p class="byline">Inna Raykhman · October 2026 · built with Claude · tested on Gemini 3.1 Pro (preview) and Gemini 3.6 Flash, with Google Search</p>
 </header>
 
 <section>
@@ -143,24 +143,31 @@ footer{border-top:1px solid var(--rule);padding-top:1.25rem;display:flex;flex-di
   <ul class="plain">
     <li><strong>16 cases, 9 with made-up documents,</strong> based on questions in public personal-finance groups: retirement, tax, housing, kids' accounts, insurance, savings, tools, finding advice.  All personal details and numbers changed.</li>
     <li><strong>What good looks like:</strong> the answer surfaces what the user didn't know to ask (50 hidden facts across the cases) and gets the numbers right (20 numbers, checked against an answer key in code).</li>
-    <li><strong>Two runs.</strong>  Run 1 used the question as written.  Run 2 added a rule set for Gemini to follow: read the documents, lead with what they may not know, ask at most three questions, default the rest, show the math, separate known from assumed.</li>
+    <li><strong>Two models, two runs.</strong>  Gemini 3.1 Pro (preview) and Gemini 3.6 Flash, both with Google Search, one run per case.  Run 1 used the question as written.  Run 2 added a rule set for Gemini to follow: read the documents, lead with what they may not know, ask at most three questions, default the rest, show the math, separate known from assumed.</li>
     <li><strong>Graded by Claude, not Gemini.</strong>  In my coding harness, the same model reviews in a separate context because tests are the referee.  Here the grade is a judgment, so I used a different model that doesn't share Gemini's blind spots.  Every grade quotes the sentence it's based on, and every number is checked against code, not a model.</li>
   </ul>
 </section>
 
 <section>
   <p class="eyebrow">Results</p>
-  <h2>The harness matters more than the model</h2>
-  <p>The rule set in run 2 made the difference, not the model size.  In run 1, a smaller model (Gemini 3.6 Flash, no search) caught about as many hidden facts as Pro on the 9 cases both ran: 78% vs 80%.</p>
-  <div class="stats">
-    <div class="stat"><span class="k">Hidden facts it mentioned</span><span class="v"><span class="from">69%</span><span class="arrow">→</span>89%</span><span class="note num">34.5 → 44.5 of 50</span></div>
-    <div class="stat"><span class="k">Answers that asked the person a question</span><span class="v"><span class="from">0</span><span class="arrow">→</span>16</span><span class="note num">of 16</span></div>
-    <div class="stat"><span class="k">Numbers that matched the answer key</span><span class="v"><span class="from">13</span><span class="arrow">→</span>15</span><span class="note num">of 20</span></div>
+  <h2>Models are great; harness matters more now</h2>
+  <p>The rule set added 20 points to both models.  The bigger model added 6.  Flash with the rules caught more than Pro without them: 83% vs 69%.</p>
+  <div class="tablebox">
+    <table>
+      <thead><tr><th></th><th>Run 1</th><th>Run 2</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Hidden facts caught</strong> · Pro</td><td class="n">69%</td><td class="n">89%</td></tr>
+        <tr><td><strong>Hidden facts caught</strong> · Flash</td><td class="n">63%</td><td class="n">83%</td></tr>
+        <tr><td><strong>Answers that asked the person a question</strong> · both models</td><td class="n">0 of 32</td><td class="n">32 of 32</td></tr>
+        <tr><td><strong>Numbers that matched the answer key</strong> · Pro</td><td class="n">13 of 20</td><td class="n">15 of 20</td></tr>
+        <tr><td><strong>Numbers that matched the answer key</strong> · Flash</td><td class="n">10 of 20</td><td class="n">15 of 20</td></tr>
+      </tbody>
+    </table>
   </div>
-  <p class="note">Left number: run 1.  Right number: run 2.  Both runs on Gemini 3.1 Pro.</p>
+  <p class="note">Hidden facts: 50 across the 16 cases.  The gains are uneven: half of Pro's cases and a quarter of Flash's scored the same in both runs.  The chart shows Pro, case by case.</p>
 
-  <div class="chart" role="img" aria-label="Share of hidden facts caught per case, run 1 versus run 2">
-    <div class="legend"><span><i class="dot b"></i>Run 1</span><span><i class="dot p"></i>Run 2</span><span>Share of hidden facts caught per case</span></div>
+  <div class="chart" role="img" aria-label="Gemini 3.1 Pro: share of hidden facts caught per case, run 1 versus run 2">
+    <div class="legend"><span><i class="dot b"></i>Run 1</span><span><i class="dot p"></i>Run 2</span><span>Pro: share of hidden facts caught per case</span></div>
     <div class="rows" id="rows"></div>
     <div class="axis"><span></span><div class="ticks"><span style="left:0">0%</span><span style="left:50%">50%</span><span style="left:100%">100%</span></div><span></span></div>
   </div>
@@ -181,12 +188,12 @@ footer{border-top:1px solid var(--rule);padding-top:1.25rem;display:flex;flex-di
 
   <div class="finding">
     <h3>2. In run 1, Gemini never interviews the user</h3>
-    <p>In 16 answers in run 1, Gemini asked the person nothing.  Instead it guessed, sometimes a lot: it assumed the 45-year-old keeps saving $300K to $400K a year from a business he says is about to shrink.  In run 2, every answer asked two or three questions and said what it assumed.</p>
+    <p>In 32 answers in run 1, across both models, Gemini asked the person nothing.  Instead it guessed, sometimes a lot: it assumed the 45-year-old keeps saving $300K to $400K a year from a business he says is about to shrink.  In run 2, every answer asked up to three questions and said what it assumed.</p>
   </div>
 
   <div class="finding">
     <h3>3. Number retrieval is inconsistent</h3>
-    <p>Even with search on, Gemini used 2025 tax brackets labeled as 2026 in three answers.  In one, it changed the advice: it said you can convert $33,450 and stay in the 22% bracket.  The right number for 2026 is $35,800.  The same model got it right in the other run.  Tax figures change every year.  They should live in a rules layer the model reads from, not in the model.</p>
+    <p>Even with search on, Pro used 2025 tax brackets labeled as 2026 in three answers.  In one, it changed the advice: it said you can convert $33,450 and stay in the 22% bracket.  The right number for 2026 is $35,800.  Pro got it right in the other run.  Flash got the brackets right every time, then used last year's Social Security wage cap as this year's in another answer.  Tax figures change every year.  They should live in a rules layer the model reads from, not in the model.</p>
   </div>
 
   <div class="finding">
@@ -197,9 +204,9 @@ footer{border-top:1px solid var(--rule);padding-top:1.25rem;display:flex;flex-di
   <div class="finding">
     <h3>What still broke</h3>
     <ul class="plain">
-      <li><strong>Adding up spending, the thing Gemini does today.</strong>  Asked for health-care spending across three exports, both runs said $2,606.47.  They counted drugstore purchases and Venmo payments as medical without checking.  The sure-medical total is $1,318.00.</li>
-      <li><strong>Prices that change between answers.</strong>  The same budgeting app came back as "~$120/yr" in one answer and "about $40 to $50 a year" in another, neither with a source.</li>
-      <li><strong>Financial aid.</strong>  Neither run mentioned that a teen's UTMA account counts heavily against college aid.</li>
+      <li><strong>Adding up spending, the thing Gemini does today.</strong>  Asked for health-care spending across three exports, all four answers said $2,606.47.  They counted drugstore purchases and Venmo payments as medical without checking.  The sure-medical total is $1,318.00.</li>
+      <li><strong>Prices that change between answers.</strong>  The same budgeting app came back at three prices in three answers: "~$120/yr," "about $40 to $50 a year" and "$60/year."</li>
+      <li><strong>Financial aid.</strong>  Three of four answers missed that a teen's UTMA account counts heavily against college aid.  Only Flash with the rules caught it.</li>
     </ul>
   </div>
 </section>
@@ -231,7 +238,7 @@ footer{border-top:1px solid var(--rule);padding-top:1.25rem;display:flex;flex-di
 
 <footer>
   <p><strong>Additional data</strong></p>
-  <p>The cases, answer key, code, per-case scores and all of Gemini's answers aren't included here.  Reach out and I'm happy to share them.</p>
+  <p>The cases, answer key, code, per-case scores and all of Gemini's answers: <a href="https://github.com/neinna/finance_eval">github.com/neinna/finance_eval</a></p>
   <p class="note">Cases are made up; nothing here is financial advice.</p>
 </footer>
 

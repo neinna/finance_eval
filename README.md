@@ -17,13 +17,23 @@ All cases and documents are synthetic, modeled on question patterns in public pe
 | `rubric.md` | How answers were graded |
 | `run.py` | Harness. Python 3.8+, standard library only |
 | `results/` | Raw Gemini answers, one JSON line per case per run |
-| `scores_pro.md` | Grades for every case, with the sentence each grade rests on |
+| `scores_pro.md`, `scores_flash.md` | Grades for every case, per model, with the sentence each grade rests on |
+| `index.html` | The write-up page (same file in `site/`) |
 
 ## Runs
 
 - **Run 1:** the question as written.
 - **Run 2:** the same question with `prompts/principle.txt` as the system instruction.
-- Gemini 3.1 Pro (preview) with Google Search grounding, October 21, 2026. Graded by Claude against `rubric.md`; numbers checked against `answer_key.json`.
+- Gemini 3.1 Pro (preview), October 21, 2026, and Gemini 3.6 Flash, October 22, 2026, both with Google Search grounding. One run per case per arm. Graded by Claude against `rubric.md`; numbers checked against `answer_key.json`.
+
+## Result
+
+| Hidden facts caught (of 50) | Run 1 | Run 2 |
+|---|---|---|
+| Pro | 69% | 89% |
+| Flash | 63% | 83% |
+
+The rule set added 20 points on both models; the bigger model added 6.
 
 ## Reproduce
 

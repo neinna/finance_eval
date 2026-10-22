@@ -11,7 +11,7 @@ One run per case per arm; run-to-run variance not measured.
 | Cases where it asked the user anything | 0 / 16 | 16 / 16 |
 | Answer-key numbers matched (scorable) | 13 / 20 | 15 / 20 |
 
-Flash comparison (gemini-3.6-flash, no search, baseline, the 9 cases that ran): 21 / 27 catches (78%). Pro baseline on the same 9 cases: 21.5 / 27 (80%).
+Flash on the same 16 cases, both runs, with search: see scores_flash.md (63% run 1, 83% run 2).
 
 ## Catches by case
 
