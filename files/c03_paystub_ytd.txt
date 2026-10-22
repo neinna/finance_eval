@@ -1,0 +1,16 @@
+GENERATED FOR EVALUATION. Fictional employee and employer.
+
+EARNINGS STATEMENT, pay date 2026-10-15 (semi-monthly)
+Employee: single filer, W-4 standard
+
+                              This period      Year to date
+Gross salary                    4,500.00        85,500.00
+401(k) pre-tax deferral         1,000.00        19,000.00
+Roth 401(k) deferral              125.00         2,375.00
+Federal income tax                412.00         7,828.00
+Social Security                   279.00         5,301.00
+Medicare                           65.25         1,239.75
+
+Annual salary: 108,000.00
+Employer contribution: 25% of employee deferrals, deposited to the pre-tax source.
+Elected deferrals for 2026: $22,000 pre-tax + $2,500 Roth = $24,500 (plan maximum reached by year end).

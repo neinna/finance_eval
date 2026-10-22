@@ -1,0 +1,11 @@
+GENERATED FOR EVALUATION. Fictional household.
+
+HOUSEHOLD INCOME, 2026 (expected full year)
+Filing status last year: married filing jointly
+
+Pension (account holder), fully taxable, Form 1099-R      $64,000
+Spouse W-2 wages (age 61, still working)                  $70,000
+Interest and dividends                                          $0
+Social Security                                     not yet claimed (plan: age 67)
+
+Mortgage: $35,000 remaining at 3.1%

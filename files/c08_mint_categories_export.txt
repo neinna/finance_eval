@@ -1,0 +1,17 @@
+GENERATED FOR EVALUATION. Fictional user's export of custom budgeting setup.
+
+Custom categories (34 total, sample):
+  Kids > Daycare, Kids > Activities, Kids > Clothes
+  House > Repairs, House > Furniture
+  Medical > Out of pocket (HSA eligible), Medical > Insurance premiums
+  Side business > Supplies, Side business > Software
+  Travel > Flights, Travel > Lodging
+
+Custom rules (52 total, sample):
+  "AMZN" with note containing "kids"          -> Kids > Clothes
+  "VENMO" to Jane D.                           -> Kids > Daycare
+  "HOME DEPOT" over $200                        -> House > Repairs
+  Any merchant with MCC 8011, 8021, 8042, 8062 -> Medical > Out of pocket (HSA eligible)
+
+Reports used monthly: spending by category vs last year; medical total for HSA reimbursement;
+side business expenses for Schedule C.

@@ -1,0 +1,232 @@
+{
+  "version": "2026-10-20",
+  "note": "All cases are synthetic. Each is modeled on a question pattern seen in public personal-finance community posts; numbers, ages, places and details are changed so no case matches a real person. Documents in files/ are generated.",
+  "cases": [
+    {
+      "id": "c01",
+      "title": "Cash-heavy, career may end at 50",
+      "area": "retirement readiness / investing",
+      "prompt": "What would you do? I'm 45, my spouse stays home, kids are 7 and 1. My consulting business will probably shrink a lot in the next 5 years because of AI, so I'm saving like I'll stop working at 50. We rent for $7,500 a month. About $3.6M sits in a money market at around 4%. Income this year is about $950K and we spend about $14K a month (we'd cut back once work stops). I'd planned to buy a home for $1.2-1.5M and invest the rest, but I've been waiting for a dip. For 5 months I've put $20K a month into a total market fund. Do I just invest it all now? I can't stomach a 30% drop if I'm retiring in 5 years. Is there a safer way to get 7-8%? My statement is attached.",
+      "files": ["c01_brokerage_statement.csv"],
+      "catches": [
+        {"id": "draw_rate", "text": "Reframes the question around spending sustainability: about $168K/yr against $3.6M is roughly a 4.7% draw starting around age 50, a long horizon, before any home purchase."},
+        {"id": "home_changes_math", "text": "Shows the home purchase changes the plan more than market timing: paying ~$1.35M cash cuts investable assets to ~$2.25M and pushes the draw rate to roughly 6% even after dropping rent."},
+        {"id": "no_safe_7_8", "text": "Says plainly there is no low-risk 7-8% return; return and drawdown risk trade off."},
+        {"id": "missing_costs", "text": "Flags costs missing from the plan: health insurance after the business ends and/or the kids' education."}
+      ],
+      "must_ask": ["expected income after the business winds down", "whether the home purchase is happening"],
+      "numbers": ["c01_draw_rate_now_pct", "c01_draw_rate_after_home_pct"]
+    },
+    {
+      "id": "c02",
+      "title": "Fixed annuity with \"no fees\"",
+      "area": "products / advisor claims",
+      "prompt": "My financial advisor suggested a fixed annuity to replace the bond part of my portfolio, about $180K. I was always told to stay away from annuities, but he says fixed ones are different, they replace bonds while bonds aren't doing well, and there are no fees. The illustration is attached. I'm 58. Thoughts?",
+      "files": ["c02_annuity_illustration.txt"],
+      "catches": [
+        {"id": "surrender_charge", "text": "Points out that 'no fees' leaves out the surrender charges (7% to 3% over five years) and the market value adjustment, which are real costs if money comes out early."},
+        {"id": "commission_in_rate", "text": "Notes the agent's commission is paid by the insurer and recovered through the product's pricing, so 'no fees' does not mean no cost."},
+        {"id": "compare_alternatives", "text": "Suggests comparing the 5.10% guarantee with a same-term Treasury or CD, and notes the guarantee depends on the insurer's claims-paying ability (state guaranty limits)."}
+      ],
+      "must_ask": ["whether any of the $180K may be needed within five years"],
+      "numbers": ["c02_year2_surrender_usd"]
+    },
+    {
+      "id": "c03",
+      "title": "Roth vs traditional 401(k) split",
+      "area": "tax",
+      "prompt": "This year I put $22,000 into my traditional 401(k) and $2,500 into the Roth 401(k), which maxes me out. My employer adds 25% of what I put in. Should I split 50/50 next year or keep most of it traditional? Which makes more sense long term? Pay stub attached.",
+      "files": ["c03_paystub_ytd.txt"],
+      "catches": [
+        {"id": "bracket_now", "text": "Works out the current marginal bracket from the stub: 22% federal, and shifting to 50/50 keeps the user in 22%."},
+        {"id": "depends_on_later_bracket", "text": "Explains the decision turns on the tax rate expected in retirement vs today's 22%, which the user hasn't said."},
+        {"id": "employer_pretax", "text": "Notes the employer's 25% goes to the pre-tax source regardless, so the household already has pre-tax money growing."}
+      ],
+      "must_ask": ["expected income or tax bracket in retirement"],
+      "numbers": ["c03_marginal_rate_pct", "c03_extra_tax_5050_usd"]
+    },
+    {
+      "id": "c04",
+      "title": "Rent out or sell a low-rate condo",
+      "area": "housing / tax",
+      "prompt": "Should I rent out my condo or sell it? I'm a single mom with a toddler in LA and I've lived in this 2-bedroom since 2018. The rate is 2.875% and all-in housing costs are about $2,450 a month. Things are getting too expensive, so I'm planning to move in with family in December. Similar condos rent for $2,750-2,900, so I'd net maybe $300-450 a month. With LA tenant laws, repairs and the risk of a tenant not paying, is it worth it? I have about 50% equity. Mortgage statement and comps attached.",
+      "files": ["c04_mortgage_statement.txt", "c04_rent_comps.csv"],
+      "catches": [
+        {"id": "sec121_window", "text": "Flags the home-sale exclusion: she must have lived there 2 of the 5 years before a sale, so after moving out in December 2026 she has until about December 2029 to sell and exclude up to $250K of gain."},
+        {"id": "gain_fits_exclusion", "text": "Estimates the gain (about $185K on a $455K purchase and ~$640K value) fits under the $250K exclusion now, and becomes taxable if she sells after the window, plus depreciation recapture from the rental years."},
+        {"id": "net_after_costs", "text": "Shows the $300-450 net disappears or goes negative after vacancy, repairs and maintenance."}
+      ],
+      "must_ask": ["whether she might move back or needs the equity soon"],
+      "numbers": ["c04_sec121_deadline", "c04_gain_usd", "c04_net_low_usd", "c04_net_high_usd"]
+    },
+    {
+      "id": "c05",
+      "title": "In-plan Roth conversion",
+      "area": "tax",
+      "prompt": "My job offers a traditional and a Roth 401(k). I started in the traditional before I knew the Roth existed, and now I'm thinking of converting what's there into the Roth. Or should I split contributions going forward? I don't know what bracket I'll be in when I retire, and tax-free sounds great. No employer match, and I max my Roth IRA every year too. My 401(k) statement is attached.",
+      "files": ["c05_401k_statement.txt"],
+      "catches": [
+        {"id": "conversion_taxed_now", "text": "Explains converting the $38K is taxed as ordinary income this year and the plan won't withhold, so the tax has to come from other cash."},
+        {"id": "crosses_bracket", "text": "Computes that converting all $38K pushes part of it from 22% into 24%; converting about $35,800 keeps it all in 22%."}
+      ],
+      "must_ask": ["whether there is cash outside the 401(k) to pay the tax"],
+      "numbers": ["c05_conversion_tax_usd", "c05_room_in_22_usd"]
+    },
+    {
+      "id": "c06",
+      "title": "Roth conversions before RMDs, Medicare worries",
+      "area": "retirement / tax",
+      "prompt": "I'm 63 and retired. My pension covers our living expenses. I'm leaving my wife's situation out for now; she's 61 and hasn't decided when to retire. We owe $35K on the house at 3.1%. I plan to take Social Security at 67. I have $650K in a traditional IRA and $70K in a Roth, and I'd like not to touch them until I'm forced to take withdrawals. Should I convert more to the Roth? How much and when? I'm worried about paying too much tax and higher Medicare premiums. Statements attached.",
+      "files": ["c06_ira_statement.txt", "c06_income_summary.txt"],
+      "catches": [
+        {"id": "spouse_income_counts", "text": "Points out that on a joint return the wife's $70K wages count toward the bracket and Medicare thresholds, so she can't be left out of the math."},
+        {"id": "irmaa_binds", "text": "Shows the Medicare surcharge threshold, not the tax bracket, is the binding limit: about $84K of conversion keeps joint income under $218K, versus about $109,600 of room to the top of the 22% bracket."},
+        {"id": "irmaa_lookback", "text": "Explains Medicare premiums are set on income from two years earlier, so conversions from age 63 already affect premiums at 65."},
+        {"id": "window", "text": "Frames the conversion window as now until Social Security at 67 and required withdrawals at 75 (born 1963)."}
+      ],
+      "must_ask": ["whether they file jointly / when the spouse plans to stop working"],
+      "numbers": ["c06_room_to_top_of_22_usd", "c06_room_under_irmaa_usd", "c06_rmd_age"]
+    },
+    {
+      "id": "c07",
+      "title": "High-yield savings and a teen account",
+      "area": "savings products",
+      "prompt": "Who do people like for a high-yield savings account right now, Betterment or Wealthfront? Any referral codes? Also looking for a teen account for my 15-year-old: debit card, both of us can log in and see the balance, and ideally it earns interest. I'd rather not pay $5.99 a month for Greenlight; that's a lot given she'll keep around $600 in it.",
+      "files": [],
+      "catches": [
+        {"id": "fee_vs_interest", "text": "Does the math: $5.99/month is about $72 a year, roughly three times the interest $600 would earn at ~4%."},
+        {"id": "rates_change", "text": "Says rates and fees change often and either gives current, dated figures with a source or says to check them, rather than stating rates from memory as current."},
+        {"id": "insurance_structure", "text": "Notes these accounts are typically FDIC-insured through partner banks (sweep programs) and that's worth checking."}
+      ],
+      "must_ask": [],
+      "numbers": ["c07_annual_fee_usd", "c07_interest_on_600_usd"]
+    },
+    {
+      "id": "c08",
+      "title": "Replacing Mint, or building my own",
+      "area": "tools",
+      "prompt": "What do people use for budgeting and financial planning these days? I used Mint plus Excel for over a decade, configured exactly how I liked it. The new Credit Karma tracking is nowhere close. I haven't tried Rocket Money or Monarch. With all the AI tools there should be a better way. Otherwise I'm considering building exactly what I want with Claude. My old Mint setup is attached.",
+      "files": ["c08_mint_categories_export.txt"],
+      "catches": [
+        {"id": "reads_her_setup", "text": "Uses the attached setup: names what she actually relies on (custom rules, the HSA medical report, side-business expenses for Schedule C) and judges options against those."},
+        {"id": "build_cost", "text": "If she builds her own, names the hard part honestly: getting bank and card data (aggregator access, cost, maintenance), not the categorizing."}
+      ],
+      "must_ask": [],
+      "numbers": []
+    },
+    {
+      "id": "c09",
+      "title": "One-time, flat-fee advice",
+      "area": "finding advice",
+      "prompt": "I'm looking for someone to give one-time financial advice for a flat fee. Does that even exist? The only option I've found is a subscription service with a yearly fee, and I only need help with one decision: modeling a job offer's salary, stock and 401(k).",
+      "files": [],
+      "catches": [
+        {"id": "advice_only_exists", "text": "Says yes: advice-only or hourly planners exist, and names how to find them (planner networks or directories) rather than only subscription services."},
+        {"id": "offers_to_model", "text": "Offers to start modeling the decision now if she shares the offer details, while being clear about limits."}
+      ],
+      "must_ask": ["the details of the offer and the current package"],
+      "numbers": []
+    },
+    {
+      "id": "c10",
+      "title": "Where to put a teen's earned income",
+      "area": "kids' accounts",
+      "prompt": "Our 16-year-old earned $9,000 at a summer job this year. His Roth IRA is maxed for 2026. He has a UTMA with nothing in it because I'm not sure it's the right path; he's responsible now, but that could change when he's older. We contribute to his 529 regularly. Where else could the rest of his income go?",
+      "files": [],
+      "catches": [
+        {"id": "utma_control", "text": "Explains the UTMA becomes his outright at the state's age of transfer (often 18 or 21), which is exactly the parent's worry."},
+        {"id": "utma_aid", "text": "Notes a UTMA counts as the student's asset for financial aid, assessed more heavily than a parent-owned 529."},
+        {"id": "roth_max_math", "text": "Confirms the Roth max is $7,500 for 2026 (capped at earned income), leaving $1,500 of his earnings."},
+        {"id": "529_to_roth", "text": "Mentions unused 529 money can later roll into his Roth IRA, within a lifetime limit and a 15-year account-age rule."}
+      ],
+      "must_ask": ["which state / whether he plans to go to college"],
+      "numbers": ["c10_roth_max_usd", "c10_remaining_usd"]
+    },
+    {
+      "id": "c11",
+      "title": "Umbrella premium up 25%",
+      "area": "insurance",
+      "prompt": "My umbrella policy renewal came in 25% higher, $540 to $675 a year for $2M of coverage. We've had it 9 years with no claims, same company as our auto, also no claims. We're in California. An AI told me big auto injury claims are hitting umbrella payouts and that California held rates down before and insurers are catching up. Is anyone else seeing this? Should I shop around or just accept it as a cost of living here?",
+      "files": [],
+      "catches": [
+        {"id": "bundle_dependency", "text": "Explains the umbrella sits on top of the auto (and home) liability limits and is often tied to the same insurer, so shopping usually means re-quoting the bundle, not just the umbrella."},
+        {"id": "verifies_ai_claim", "text": "Treats the earlier AI explanation as unverified: says what it can confirm, with a source, and what it can't."},
+        {"id": "dollar_size", "text": "Puts the increase in dollars ($135 a year) so the decision is sized."}
+      ],
+      "must_ask": ["the underlying auto/home liability limits or other policies with the insurer"],
+      "numbers": ["c11_increase_usd"]
+    },
+    {
+      "id": "c12",
+      "title": "$30K windfall: 529, Roth conversion taxes, invest, or ADU",
+      "area": "allocation decision",
+      "prompt": "What would you do if you came into $30K? Front-load the kids' 529s, use it to pay the taxes on some Roth conversions, invest it in a taxable account, or put it toward an ADU? My first thought was the responsible thing, front-loading the 529. Then I thought Roth conversion. Now the ADU seems much more useful and enjoyable to me.",
+      "files": [],
+      "catches": [
+        {"id": "cannot_rank_without", "text": "Says the options can't be ranked without a few facts and asks for them rather than picking a winner."},
+        {"id": "state_529_cap", "text": "Notes some states cap the yearly 529 tax deduction, so front-loading can waste part of it."},
+        {"id": "enjoyment_valid", "text": "Treats 'more useful and enjoyable' as a legitimate input, not a mistake to correct."}
+      ],
+      "must_ask": ["tax bracket now vs expected later", "kids' ages / state", "whether the ADU would earn rent"],
+      "numbers": []
+    },
+    {
+      "id": "c13",
+      "title": "Find all health care spending across accounts",
+      "area": "spending data (existing Wallet capability)",
+      "prompt": "I don't need budgeting help, but I need to find all our health care expenses this year across two cards and our checking account. Ideally something lightweight and cheap; I've been looking at Lunch Money. Can you just pull the total from these exports?",
+      "files": ["c13_card_a.csv", "c13_card_b.csv", "c13_checking.csv"],
+      "catches": [
+        {"id": "correct_total", "text": "Totals the clearly medical transactions correctly ($1,318.00) and lists them."},
+        {"id": "excludes_lookalikes", "text": "Excludes the look-alikes: the veterinary 'hospital' ($412) and the gym ($260)."},
+        {"id": "flags_ambiguous", "text": "Flags the ambiguous items for confirmation instead of guessing: drugstore purchases ($88.47) and the Venmo 'therapy'/'session' payments ($1,200)."},
+        {"id": "asks_purpose", "text": "Asks what the total is for: HSA reimbursement (receipts can be reimbursed later) vs the medical deduction (only above 7.5% of AGI)."}
+      ],
+      "must_ask": ["what the total is for (HSA reimbursement vs tax deduction)"],
+      "numbers": ["c13_definite_medical_usd", "c13_ambiguous_usd"]
+    },
+    {
+      "id": "c14",
+      "title": "CPA bill shock, and still owing",
+      "area": "tax / advice costs",
+      "prompt": "We used a CPA for the first time for last year's return because of a rental property and one W-2 income. The final invoice was over $3K, including over $1K for 'partner review'. They also filed an extension even though we uploaded everything in late February, and we still owed a lot, same as the years we used TurboTax. Is this normal? The invoice is attached.",
+      "files": ["c14_cpa_invoice.txt"],
+      "catches": [
+        {"id": "extension_not_payment", "text": "Points out the extension extended the filing, not the payment: the $6,800 paid on September 30 likely carries late-payment penalties and interest from April 15."},
+        {"id": "owing_every_year", "text": "Identifies the repeat balance due ($5,900 then $6,800) as a withholding or estimated-payment problem worth fixing, and mentions the safe harbor (110% of prior-year tax at this income level)."},
+        {"id": "fee_context", "text": "Gives context on the fee without a verdict: first-year rental setup and partner review are plausible, worth asking about in the engagement letter."}
+      ],
+      "must_ask": ["whether the penalty/interest was charged or paid"],
+      "numbers": []
+    },
+    {
+      "id": "c15",
+      "title": "Opening a solo 401(k) without an LLC",
+      "area": "self-employment retirement",
+      "prompt": "I'm self-employed now and want to put my earnings into a retirement account. My CPA suggested a solo 401(k) instead of a SEP because a SEP would make backdoor Roth contributions difficult. I'm looking at E*Trade and Ascensus. E*Trade wants a PDF printed, scanned and uploaded, and I've seen mentions of needing an EIN. I didn't form an LLC since it's just one part-time contract. Any tips?",
+      "files": [],
+      "catches": [
+        {"id": "why_not_sep", "text": "Explains the CPA's reason: SEP IRA balances count in the pro-rata rule for backdoor Roth conversions; a solo 401(k) doesn't."},
+        {"id": "no_llc_ein", "text": "Says no LLC is needed (a sole proprietor can open one) and that providers commonly require an EIN, which is free from the IRS online."},
+        {"id": "shared_deferral_limit", "text": "Asks whether there's also a W-2 401(k): the $24,500 employee deferral limit is shared across all plans."},
+        {"id": "filing_threshold", "text": "Mentions Form 5500-EZ once plan assets exceed $250,000."}
+      ],
+      "must_ask": ["whether there is another 401(k) through an employer", "expected net self-employment income"],
+      "numbers": []
+    },
+    {
+      "id": "c16",
+      "title": "Unmatched 401(k) or family HSA, cash is tight",
+      "area": "benefits / cash flow",
+      "prompt": "My husband works at an early-stage startup with almost no benefits, so our retirement saving goes through my employer. This year we've had a lot of out-of-pocket medical costs, and I'm deciding whether to max my 401(k) or our family HSA. We can't do both in 2026. My employer doesn't match. I've only recently started contributing to the HSA. Our snapshot is attached.",
+      "files": ["c16_benefits_summary.txt"],
+      "catches": [
+        {"id": "hsa_first", "text": "Explains why the HSA usually comes first with no 401(k) match: tax-free in and out for medical costs, and payroll contributions also skip payroll tax."},
+        {"id": "reimburse_now", "text": "Catches that the $6,200 of out-of-pocket medical costs already paid this year can be reimbursed from the HSA tax-free, which eases the cash crunch they're asking about."},
+        {"id": "limit_math", "text": "Uses the 2026 family HSA limit ($8,750): with $1,200 in, $7,550 of room, which nearly matches their ~$9,000 of available cash."}
+      ],
+      "must_ask": [],
+      "numbers": ["c16_hsa_room_usd", "c16_payroll_tax_saved_usd"]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+GENERATED FOR EVALUATION. Fictional borrower and property.
+
+MORTGAGE STATEMENT, October 2026
+Property: 2-bedroom condominium, Los Angeles, CA. Owner-occupied since purchase.
+Purchase date: 2018-03-15     Purchase price: $455,000
+Loan: 30-year fixed, 2.875% (refinanced 2021)
+Principal balance: $318,400
+
+Monthly payment
+  Principal and interest        $1,505.00
+  Escrow: property tax            $512.00
+  Escrow: homeowners (HO-6)        $58.00
+  Total mortgage payment        $2,075.00
+HOA dues (paid separately)         $375.00
+Total monthly housing cost      $2,450.00
+
+Owner's estimate of current value: $640,000

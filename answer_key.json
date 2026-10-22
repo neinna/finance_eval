@@ -1,0 +1,117 @@
+{
+  "c01_draw_rate_now_pct": {
+    "value": 4.67,
+    "tolerance": 0.3,
+    "how": "168,000 / 3,600,000"
+  },
+  "c01_draw_rate_after_home_pct": {
+    "value": 5.87,
+    "tolerance": 0.6,
+    "how": "(14,000 - 7,500 rent + 4,500 carrying) x 12 / (3.6M - 1.35M home)"
+  },
+  "c02_year2_surrender_usd": {
+    "value": 10800.0,
+    "tolerance": 100,
+    "how": "6% x 180,000, before the market value adjustment"
+  },
+  "c03_marginal_rate_pct": {
+    "value": 22.0,
+    "tolerance": 0,
+    "how": "taxable 69,900 single; 50/50 taxable 79,650, same bracket"
+  },
+  "c03_extra_tax_5050_usd": {
+    "value": 2145.0,
+    "tolerance": 60,
+    "how": "moving 9,750 from pre-tax to Roth at 22%"
+  },
+  "c04_sec121_deadline": {
+    "value": "2029-12",
+    "tolerance": "month",
+    "how": "2-of-5-year use test: move out Dec 2026, sell by about Dec 2029"
+  },
+  "c04_gain_usd": {
+    "value": 185000,
+    "tolerance": 10000,
+    "how": "640,000 value - 455,000 purchase, before selling costs and improvements; under the 250,000 single exclusion"
+  },
+  "c04_net_low_usd": {
+    "value": -371,
+    "tolerance": 150,
+    "how": "rent 2,750 less 5% vacancy, less 2,450 costs, less 1%/yr maintenance; before tax. Pre-cost spread: 300"
+  },
+  "c04_net_high_usd": {
+    "value": -228,
+    "tolerance": 150,
+    "how": "rent 2,900 less 5% vacancy, less 2,450 costs, less 1%/yr maintenance; before tax. Pre-cost spread: 450"
+  },
+  "c05_conversion_tax_usd": {
+    "value": 8404.0,
+    "tolerance": 150,
+    "how": "taxable 69,900 -> 107,900; crosses 105,700"
+  },
+  "c05_room_in_22_usd": {
+    "value": 35800,
+    "tolerance": 500,
+    "how": "105,700 - 69,900"
+  },
+  "c06_room_to_top_of_22_usd": {
+    "value": 109600,
+    "tolerance": 1000,
+    "how": "211,400 - taxable 101,800 (joint, spouse wages included)"
+  },
+  "c06_room_under_irmaa_usd": {
+    "value": 84000,
+    "tolerance": 1000,
+    "how": "218,000 - MAGI 134,000; 2026 tier shown, thresholds adjust yearly"
+  },
+  "c06_rmd_age": {
+    "value": 75,
+    "tolerance": 0,
+    "how": "born 1963: SECURE 2.0 sets 75 for 1960 and later"
+  },
+  "c07_annual_fee_usd": {
+    "value": 71.88,
+    "tolerance": 1,
+    "how": "5.99 x 12"
+  },
+  "c07_interest_on_600_usd": {
+    "value": 24.0,
+    "tolerance": 6,
+    "how": "600 x ~4%, illustrative rate"
+  },
+  "c10_roth_max_usd": {
+    "value": 7500,
+    "tolerance": 0,
+    "how": "min(7,500, earned 9,000)"
+  },
+  "c10_remaining_usd": {
+    "value": 1500,
+    "tolerance": 0,
+    "how": "9,000 - 7,500"
+  },
+  "c11_increase_usd": {
+    "value": 135,
+    "tolerance": 0,
+    "how": "675 - 540"
+  },
+  "c13_definite_medical_usd": {
+    "value": 1318.0,
+    "tolerance": 0.01,
+    "how": "pediatrics, dental, lab, eyeglasses, hospital, PT, urgent care; excludes vet 412 and gym 260"
+  },
+  "c13_ambiguous_usd": {
+    "value": 1288.47,
+    "tolerance": 0.01,
+    "how": "drugstores 88.47 + Venmo therapy/session 1,200: confirm before counting"
+  },
+  "c16_hsa_room_usd": {
+    "value": 7550,
+    "tolerance": 0,
+    "how": "8,750 family limit - 1,200 contributed"
+  },
+  "c16_payroll_tax_saved_usd": {
+    "value": 577.58,
+    "tolerance": 10,
+    "how": "7,550 x 7.65% if contributed through payroll"
+  }
+}

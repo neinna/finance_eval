@@ -1,0 +1,10 @@
+GENERATED FOR EVALUATION. Fictional account holder.
+
+RETIREMENT ACCOUNTS SUMMARY, as of 2026-09-30
+Account holder: age 63 (born 1963), married
+
+Traditional IRA (rollover)      $650,000.00
+Roth IRA                         $70,000.00
+Total                           $720,000.00
+
+No withdrawals or conversions year to date.
